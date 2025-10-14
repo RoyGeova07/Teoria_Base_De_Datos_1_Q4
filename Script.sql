@@ -1,4 +1,4 @@
---SENTENCIA CREANDO LA BASE DE DATOS 
+NCIA CREANDO LA BASE DE DATOS 
 create database CURSO;
 
 
@@ -30,7 +30,9 @@ create table usuarios3(id bigserial not null primary key,nombre varchar(60),apel
  */
 --haciendo esto hace que en la tabla usuarios va a guardar datos q son correspondientes a la columna nombre y apellido
 --usando values hago que valores inserto 
-insert into usuarios(nombre,apellido,edad,correo)values('Hitler','Peacemaker','56','goku@yahoo.com');
+insert into usuarios(nombre,apellido,edad,correo)values('Hitler','Peacemaker',56,'goku@yahoo.com');
+insert into usuarios(nombre,apellido,edad,correo)values('Juan','Orlando',46,'orlan@gmail.com');
+insert into usuarios(nombre,apellido,edad,correo)values('Bill','Gates',57,'coco@gmail.com');
 
 
 --para hacer consultas se usa SELECT
@@ -44,12 +46,88 @@ insert into usuarios(nombre,apellido,edad,correo)values('Hitler','Peacemaker','5
 select * from usuarios;
 
 --para solo mostrar nombre 
-select nombre from usuarios;
+--select nombre from usuarios;
 
 --para mostrar nombre y apellido
-select nombre,apellido from usuarios;
+--select nombre,apellido from usuarios;
 
 
-select nombre,apellido "ApellidoUsuario" from usuarios;
+select nombre "Nombre Usuario" , apellido "Apellido Usuario", edad , correo as "Email" from usuarios;
 
+--para hacer consultas, usando 'WHERE'
+--select * from usuarios where edad=56;
+
+--select * from usuarios where apellido='Gates';
+
+--select * from usuarios where edad>25;
+--select*from usuarios where id=2
+
+--traeme todos los nombre que se parecen a tal
+
+/*
+ *el "%" hace referencia a lo que sea, por ejemplo si agrego select*from usuarios where nombre like 'ro'
+ *buscara dentro de la tabla todos los nombres con ro, roy, roe , row ,ros etc.
+ *
+ *otro ejemplo seria el correo si agrego select*from usuarios where correo like '%gmail%' 
+ *traera todos lo correos que tengan gmail
+ */
+--select*from usuarios where nombre like 'Hitler';
+-----------------------------------------------------------------------------------------------
+
+/*
+ * OPERADORES LOGICOS 
+ * 
+ * OR, NOT, AND
+ * 
+ * AND: quiero traer a las personas que tengan menos de 30 años y que tengan de gmail
+ * 
+ * OR: El or va a devolver datos que cumplan con una condicion o con otra condicion de la misma linea de codigo, si se cumple algunas de las 2 codiciones
+ * el nos va a traer esos registros 
+ * 
+ * NOT: El not es una instruccion q nos va a permitir negar las condiciones.
+ * Ojo: el not siempre se escribe despues del where 
+ * select*from usuarios where not (edad>=30);--los q no son mayores o iguales de 30 años
+ * por ende el NOT sirve para invertir los resultados
+ * 
+*/
+--insert into usuarios(nombre,apellido,edad,correo)values('Mono','Araña',77,'oro@hotmail.com');
+select*from usuarios where edad>30 and correo like '%gmail%';
+select*from usuarios where edad>30 or correo like '%gmail%';
+select*from usuarios where edad<30 or correo like '%gmail%';
+select*from usuarios where not(edad<30 or correo like '%gmail%');--los menores de 30 o con correo de gmail seran negados
+select*from usuarios where not correo like('%outlook%');--no mostrar los datos de los usuarios que tienen correo de outlook
+-----------------------------------------------------------------------------------------------------------------------------------
+
+--FUNCIONALIDAD DE ORDER BY
+/*
+ * El order sirve para ordenar los datos ya sea de formar ascendente o de forma descendente
+ * 
+ */
+select select*from public.usuarios u order by edad asc;--ordenar la edad de forma ascendente
+select*from public.usuarios u order by edad desc;--ordernar la edad de forma descendente
+
+select*from public.usuarios u order by apellido asc;--ordenar el apellido de forma alfabeticamente
+
+select*from public.usuarios u order by nombre desc,edad asc;
+
+select*from public.usuarios u order by 2;--se puede tambien ordernar por el numero de la columna 
+
+---------------------------------------------------------------------------------------------------------
+--FUNCIONALIDAD UPDATE
+/*
+ * El update nos permite actualizar registros de una tabla, siempre hay q especificar que vamos a actualizar 
+ * siempre que se va actualizar hay q tener cuidado, porque si quieres actualizar algo en especifico se tiene 
+ * que utilizar el where, porque si no se utiliza se actulizara toda la tabla 
+ * 
+ */
+
+--dentro de la tabla usuarios, se actualizara con el nombre josh en donde esta el id 8
+update public.usuarios
+set nombre='Josh'
+where id=8;
+
+update public.usuarios
+set nombre='Manuel',correo='Manuel@outlookcom'
+where id=10;
+----------------------------------------------------------------------------------------------------------
 
