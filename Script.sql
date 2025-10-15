@@ -1,4 +1,4 @@
-NCIA CREANDO LA BASE DE DATOS 
+--SENTENCIA CREANDO LA BASE DE DATOS 
 create database CURSO;
 
 
@@ -130,4 +130,51 @@ update public.usuarios
 set nombre='Manuel',correo='Manuel@outlookcom'
 where id=10;
 ----------------------------------------------------------------------------------------------------------
+
+
+--FUNCIONALIDAD DELETE
+/*
+ * Obviamente sirve para eliminar tablas, columnas, registros etc
+ * y al igual que el update hay que espcificar que se va a borrar 
+ * usando el where 
+ * 
+ * delete from public.usuarios; haciendo esto elimino todos los registros de la tabla usuarios
+ * 
+ */
+
+delete from public.usuarios 
+where id=10;
+
+--eliminar dentro de la tabla usuarios a todos los nombres q tengan 'hit'
+delete from public.usuarios
+where nombre like '%Hit%';
+----------------------------------------------------------------------------------------------------------
+
+--COMANDO LIMIT
+/*
+ * Sirve para limitar cuantas filas devuelve una consulta
+ * 
+ * por ejemplo si tengo 10 registros en mi tabla, y solo quiero mostrar 4 registros, ahi es donde se usa el limit
+ * mostrando solo 4 registros de la tabla  
+ * 
+ * el offset sirve para saltarse los registros de una tabla
+ * 
+ */
+select*from public.usuarios u limit 4 offset 2;
+select*from public.usuarios u order by id desc limit 4;
+
+--on delete cascade: significa que automaticamente cuando se elimine un usuario de la tabla padre(usuarios), 
+--en la tabla hija(direcciones) tambien se eliminara todas las referencias que hay a ese usuario
+create table direcciones(
+id bigserial primary key not null,
+direccion varchar(200)not null,
+id_usuario integer,
+constraint fk_usuario
+	foreign key (id_usuario)
+	references usuarios(id)
+	on delete cascade 
+);
+
+
+
 
