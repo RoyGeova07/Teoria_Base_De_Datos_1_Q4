@@ -148,6 +148,7 @@ where id=10;
 --eliminar dentro de la tabla usuarios a todos los nombres q tengan 'hit'
 delete from public.usuarios
 where nombre like '%Hit%';
+
 ----------------------------------------------------------------------------------------------------------
 
 --COMANDO LIMIT
@@ -162,6 +163,7 @@ where nombre like '%Hit%';
  */
 select*from public.usuarios u limit 4 offset 2;
 select*from public.usuarios u order by id desc limit 4;
+-----------------------------------------------------------------------------------------------------------
 
 --on delete cascade: significa que automaticamente cuando se elimine un usuario de la tabla padre(usuarios), 
 --en la tabla hija(direcciones) tambien se eliminara todas las referencias que hay a ese usuario
@@ -174,6 +176,66 @@ constraint fk_usuario
 	references usuarios(id)
 	on delete cascade 
 );
+
+--comando para verificar los registros de la tabla nueva 
+select*from direcciones d;
+-----------------------------------------------------------------------------------------------------------
+/*
+ * USO DE INNER JOIN
+ * 
+ * Si yo quiero hacer una consulta donde yo traigo datos de la tabla de usuarios y ademas de la tabla de direcciones
+ * toca utilizar un Inner Join
+ * 
+ */
+
+select*
+from public.usuarios u	--aqui selecciona la tabla principal a la cual hacemos referencia 
+inner join public.direcciones d on d.id_usuario=u.id;--aqui se hace una union interna de la tabla direcciones en el campo id_usuarios y el campo usuarios id
+
+select u.nombre,u.apellido,u.edad,d.direccion 
+from public.usuarios u
+inner join public.direcciones d on d.id_usuario=u.id;
+-----------------------------------------------------------------------------------------------------------
+
+/*
+ * 
+ * USO DEL TRUNCATE 
+ * 
+ * El truncate nos servira para borrar todos los datos de una tabla al igual que el delete, pero de una manera un poco
+ * mas efectiva. El delete va borrando ser una tabla pero escaneando la tabla lo que lo hace un poco mas lento 
+ * 
+ * El truncate funciona un poco mas rapido,primero porque no hace esto de escanear toda la tabla y segundo porque apenas una 
+ * de estas sentencias va a devolver todo el espacio en disco que se tenia ocupado por los datos de esta tabla.
+ * 
+ */
+
+create table direcciones_1(
+id bigserial primary key not null,
+direccion varchar(100)not null,
+id_usuario integer,
+constraint fk_usuario
+	foreign key (id_usuario)
+	references usuarios(id)
+	on delete cascade 
+	
+);
+
+
+select*from direcciones_1 d;
+
+truncate  public.direcciones_1;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
