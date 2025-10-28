@@ -1,1 +1,6 @@
-*.sql linguist-language=PLpgSQL
+*.pgsql linguist-language=PLpgSQL
+*.pgsql linguist-detectable=true
+
+*.hsql linguist-language=SQL
+*.hsql linguist-detectable=true
+
