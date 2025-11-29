@@ -90,7 +90,7 @@ select nombre "Nombre Usuario" , apellido "Apellido Usuario", edad , correo as "
  * por ende el NOT sirve para invertir los resultados
  * 
 */
---insert into usuarios(nombre,apellido,edad,correo)values('Mono','Araña',77,'oro@hotmail.com');
+--iinsert into usuarios(nombre,apellido,edad,correo)values('Mono','Araña',77,'oro@hotmail.com');
 select*from usuarios where edad>30 and correo like '%gmail%';
 select*from usuarios where edad>30 or correo like '%gmail%';
 select*from usuarios where edad<30 or correo like '%gmail%';
